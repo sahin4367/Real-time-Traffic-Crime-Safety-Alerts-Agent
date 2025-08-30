@@ -36,8 +36,11 @@ The goal is to inform people about traffic accidents and crime incidents in time
 
 ## n8n : WORKFLOW
 <img width="1901" height="937" alt="image" src="https://github.com/user-attachments/assets/7db5d2ac-7cdc-4fcb-8926-9a577f8233b7" />
+
+---
 ## 📧 Sample Email
 <img width="1895" height="888" alt="image" src="https://github.com/user-attachments/assets/9fb668c5-0b69-4f3a-b119-42fdbef74f38" />
-<img width="1889" height="970" alt="image" src="https://github.com/user-attachments/assets/1b606c4a-49e7-48b3-8613-526b66629558" />
+<img width="1889" height="970" alt="Ekran şəkli 2025-08-30 221628" src="https://github.com/user-attachments/assets/dc13aff0-eced-4de2-8a0e-1855d8ca6ec6" />
+
 
 
