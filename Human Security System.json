@@ -1,0 +1,166 @@
+{
+  "name": "Human Security System",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -512,
+        -160
+      ],
+      "id": "a84f7157-7aa0-4c98-ae3c-c500a3341ad1",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "webScrapper",
+        "operation": "downloadSnapshot",
+        "snapshot_id": "s_mexwg5fsdbh4ghii7",
+        "requestOptions": {}
+      },
+      "type": "@brightdata/n8n-nodes-brightdata.brightData",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -144
+      ],
+      "id": "9f7204d2-08a1-420e-b10d-3adf659671f3",
+      "name": "Download the snapshot content",
+      "credentials": {
+        "brightdataApi": {
+          "id": "KNsYr2qoFzwoX0QH",
+          "name": "BrightData account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "GPT-3.5-TURBO"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Analyze the following news stories and explain them briefly and clearly. If a specific location is mentioned, give the name of that location. Purpose: to warn people about safety and traffic rules. {{ $json.title }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -64,
+        -48
+      ],
+      "id": "ecea460c-8837-44c3-b9c6-534243592e70",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "F57hbc1qCme3EHra",
+          "name": "police"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      place: $input.first().json.message.content,\n      mapsLink: \"https://maps.google.com/?q=\" + encodeURIComponent($input.first().json.message.content)\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        272,
+        -32
+      ],
+      "id": "323988cb-9160-4713-ad6e-85c907d83d08",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "fromEmail": "vusalm598@gmial.com",
+        "toEmail": "sahin43g@gmail.com",
+        "subject": "Protect yourself from danger.",
+        "emailFormat": "text",
+        "text": "=Location information: {{ $json.place }}\n\nGoogle Maps link:{{ $json.mapsLink }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        480,
+        32
+      ],
+      "id": "d1aadf3d-59ab-41c5-99c7-86d06ebdde4c",
+      "name": "Send email",
+      "webhookId": "81316738-cecc-476d-b21e-6fe615f5ff43",
+      "credentials": {
+        "smtp": {
+          "id": "tVutKYsVsFN31igM",
+          "name": "SMTP account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Download the snapshot content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download the snapshot content": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e14ec20f-6842-44ad-9ad7-ab18daf8a1e4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3dbff725a842cffd719b3b020b6e8c46b99506048043755080d22388b1fdd182"
+  },
+  "id": "qXiEM6ZfwPLgv3Q1",
+  "tags": []
+}
